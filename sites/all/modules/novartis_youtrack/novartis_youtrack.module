@@ -1,0 +1,35 @@
+<?php
+
+module_load_include('inc', 'novartis_youtrack', 'novartis_youtrack.admin');
+
+
+/*
+ * Implements hook_menu()
+ */
+function novartis_youtrack_menu(){
+    $items = array();
+
+    $items['admin/config/content/youtrack'] = array(
+        'title' => 'Novartis YouTrack Settings',
+        'description' => 'Administer Novartis YouTrack settings',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array('youtrack_admin_settings_form'),
+        'access arguments' => array('administer youtrack settings'),
+        'file' => 'novartis_youtrack.admin.inc',
+    );
+
+    return $items;
+}
+
+
+/**
+ * Implements hook_permission()
+ */
+function novartis_youtrack_permission(){
+    return array(
+        'administer youtrack settings' => array(
+            'title' => 'Administer YouTrack subscriptions',
+            'description' => 'Allow users to administer YouTrack settings',
+        ),
+    );
+}

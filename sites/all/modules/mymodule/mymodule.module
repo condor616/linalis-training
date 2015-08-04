@@ -1,0 +1,52 @@
+<?php
+
+/**
+ * @file
+ * Main module file
+ */
+
+/**
+ * Implements hook_init()
+ */
+
+function mymodule_init(){
+    dpm('My module\'s hook is running');
+}
+
+
+/**
+ * Impements hook_menu()
+ */
+function mymodule_menu(){
+    $items = array();
+    $items['my-module'] = array(
+        'title' => 'My Page',
+        'description' => 'My first page',
+        'page callback' => 'mymodule_callback',
+        'access arguments' => array('access content'),
+    );
+    return $items;
+}
+
+
+/**
+ * My first page callback
+ */
+function mymodule_callback(){
+    return 'Hello World!';
+}
+
+
+/**
+ * Implements hook_form_alter()
+ */
+function mymodule_form_alter(&$form, &$form_state, $form_id){
+    if ('comment_node_article_form' == $form_id){
+        $form['actions']['submit']['#value'] = t('Comment');
+        $form['subject']['#attributes'] = array(
+            'class' => array('my-first-class'),
+        );
+        dpm($form);
+    }
+
+}

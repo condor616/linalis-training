@@ -1,0 +1,4 @@
+name = MyModule
+description = Firsto cutom module developed at linalis
+core = 7.x
+package = Linalis Training

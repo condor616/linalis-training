@@ -1,0 +1,33 @@
+<?php
+
+/**
+ * @File
+ * Rebutton module file
+ */
+
+/**
+ * Implements hook_node_view()
+ */
+
+function redbutton_node_view($node, $view_mode, $langcode){
+    $link_text = t('Delete this node');
+    $link_options = array(
+        'attributes' => array('style' => 'color: #f00'),
+        'html' => FALSE,
+    );
+    $link_markup = l($link_text, 'node/' . $node->nid . '/delete', $link_options);
+    $node->content['redbutton'] = array();
+
+    //Way number 1: use a hardcode string
+    //$node->content['redbutton']['#markup'] = $link_markup;
+
+    //Way number 2: renderable array
+    $node->content['redbutton'] = array(
+        '#theme' => 'link',
+        '#text' => $link_text,
+        '#path' => 'node/' . $node->nid . '/delete',
+        '#options' => $link_options,
+    );
+    $node->content['redbutton']['#weight'] = -100;
+    dpm($node);
+}

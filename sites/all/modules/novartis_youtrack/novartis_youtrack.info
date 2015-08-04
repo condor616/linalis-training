@@ -1,0 +1,4 @@
+name = Novartis YouTrack Client
+description = RESTful Client for YouTrack
+core = 7.x
+package = Marcello
