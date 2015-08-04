@@ -33,3 +33,24 @@ function novartis_youtrack_permission(){
         ),
     );
 }
+
+
+
+
+/**
+ * Implements hook_form_alter()
+ */
+function novartis_youtrack_form_alter(&$form, &$form_state, $form_id)
+{
+    if ($form_id == 'youtrack_admin_settings_form') {
+
+        dpm($form_state);
+        dpm($form);
+
+
+        //add element to the fieldset
+        $default_endpoint = variable_get('novartis_youtrack_endpoint', array());
+        $default_username = variable_get('novartis_youtrack_username', array());
+        $form['youtrack_endpoint']['#default_value'] = $default_endpoint;
+    }
+}
