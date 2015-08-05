@@ -1,6 +1,8 @@
 <?php
 
 module_load_include('inc', 'novartis_youtrack', 'novartis_youtrack.admin');
+module_load_include('inc', 'novartis_youtrack', 'novartis_youtrack_link');
+
 
 
 /*
@@ -18,6 +20,24 @@ function novartis_youtrack_menu(){
         'file' => 'novartis_youtrack.admin.inc',
     );
 
+    $items['admin/config/content/youtrack/links'] = array(
+        'title' => 'Link listing page',
+        'description' => 'Choose the desired action to perform',
+        'page callback' => 'youtrack_show_links',
+        'access arguments' => array('access links page'),
+        'file' => 'novartis_youtrack_link.inc',
+        'type' => MENU_LOCAL_TASK
+    );
+
+    $items['admin/config/content/youtrack/tab1'] = array(
+        'title' => 'Tab1',
+        'description' => 'Tab 1',
+        'page callback' => 'youtrack_show_links',
+        'access arguments' => array('access links page'),
+        'file' => 'novartis_youtrack_link.inc',
+        'type' => MENU_LOCAL_TASK
+    );
+
     return $items;
 }
 
@@ -30,6 +50,10 @@ function novartis_youtrack_permission(){
         'administer youtrack settings' => array(
             'title' => 'Administer YouTrack subscriptions',
             'description' => 'Allow users to administer YouTrack settings',
+        ),
+        'access links page' => array(
+            'title' => 'Access the links page',
+            'description' => 'Allow users to access the links page',
         ),
     );
 }
@@ -44,13 +68,17 @@ function novartis_youtrack_form_alter(&$form, &$form_state, $form_id)
 {
     if ($form_id == 'youtrack_admin_settings_form') {
 
-        dpm($form_state);
-        dpm($form);
+
+        //dpm($form_state);
+        //dpm($form);
 
 
         //add element to the fieldset
         $default_endpoint = variable_get('novartis_youtrack_endpoint', array());
         $default_username = variable_get('novartis_youtrack_username', array());
         $form['youtrack_endpoint']['#default_value'] = $default_endpoint;
+        $form['youtrack_username']['#default_value'] = $default_username;
     }
+
+
 }
