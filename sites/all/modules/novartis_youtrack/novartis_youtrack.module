@@ -2,8 +2,7 @@
 
 module_load_include('inc', 'novartis_youtrack', 'novartis_youtrack.admin');
 module_load_include('inc', 'novartis_youtrack', 'novartis_youtrack_link');
-
-
+module_load_include('inc', 'novartis_youtrack', 'novartis_youtrack_api');
 
 /*
  * Implements hook_menu()
@@ -20,16 +19,42 @@ function novartis_youtrack_menu(){
         'file' => 'novartis_youtrack.admin.inc',
     );
 
-    $items['admin/config/content/youtrack/links'] = array(
-        'title' => 'Link listing page',
+    $items['admin/config/content/youtrack/settings'] = array(
+        'title' => 'Novartis YouTrack Settings',
+        'description' => 'Administer Novartis YouTrack settings',
+        //'page callback' => 'drupal_get_form',
+        //'page arguments' => array('youtrack_admin_settings_form'),
+        //'access arguments' => array('administer youtrack settings'),
+        //'file' => 'novartis_youtrack.admin.inc',
+        'type' => MENU_DEFAULT_LOCAL_TASK
+    );
+
+    $items['admin/config/content/youtrack/operations'] = array(
+        'title' => 'Operations',
         'description' => 'Choose the desired action to perform',
-        'page callback' => 'youtrack_show_links',
-        'access arguments' => array('access links page'),
-        'file' => 'novartis_youtrack_link.inc',
+        'page callback' => 'youtrack_show_operations',
+        'access arguments' => array('access operations page'),
+        'file' => 'novartis_youtrack_operations.inc',
         'type' => MENU_LOCAL_TASK
     );
 
-    $items['admin/config/content/youtrack/tab1'] = array(
+    $items['admin/config/content/youtrack/operations/get-projects'] = array(
+        'title' => 'Get Projects',
+        'description' => 'Get the list of projects',
+        'page callback' => 'youtrack_get_projects',
+        'access arguments' => array('access operations page'),
+        'file' => 'novartis_youtrack_api.inc',
+    );
+
+    $items['admin/config/content/youtrack/operations/get-issues-by-project'] = array(
+        'title' => 'Get Issues by Project',
+        'description' => 'Get the list of issues for a given project',
+        'page callback' => 'youtrack_get_issues_by_project',
+        'access arguments' => array('access operations page'),
+        'file' => 'novartis_youtrack_api.inc',
+    );
+    /*
+    $items['admin/config/content/youtrack/reports'] = array(
         'title' => 'Tab1',
         'description' => 'Tab 1',
         'page callback' => 'youtrack_show_links',
@@ -37,6 +62,9 @@ function novartis_youtrack_menu(){
         'file' => 'novartis_youtrack_link.inc',
         'type' => MENU_LOCAL_TASK
     );
+    */
+
+
 
     return $items;
 }
@@ -51,7 +79,7 @@ function novartis_youtrack_permission(){
             'title' => 'Administer YouTrack subscriptions',
             'description' => 'Allow users to administer YouTrack settings',
         ),
-        'access links page' => array(
+        'access operations page' => array(
             'title' => 'Access the links page',
             'description' => 'Allow users to access the links page',
         ),
